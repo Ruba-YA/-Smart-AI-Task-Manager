@@ -12,4 +12,17 @@ class TodoController extends Controller
             'todos' => $todos
         ]);
     }
+
+    public function store(Request $request) {
+        $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+        $todo = auth()->user()->todos()->create([
+            'title' => request()->input('title')
+        ]);
+
+        return response()->json([
+            'todo' => $todo
+        ]);
+    }
 }
