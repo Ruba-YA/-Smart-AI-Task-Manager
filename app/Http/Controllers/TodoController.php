@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Todo;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
@@ -21,6 +22,18 @@ class TodoController extends Controller
             'title' => request()->input('title')
         ]);
 
+        return response()->json([
+            'todo' => $todo
+        ]);
+    }
+    public function update(Request $request , Todo $todo) {
+        $request->validate([
+            'completed' => 'required|boolean'
+        ]);
+        $todo->update([
+            'completed' => $request->input('completed')
+        ]);
+        
         return response()->json([
             'todo' => $todo
         ]);
